@@ -9,21 +9,19 @@
         $byrev_api_pixabay_last_query = $query;
         $query_file_cache = _PIXABAY_IMAGES_QUERY_CACHE_FOLDER.'/'.md5(strtolower(serialize($query))).'.json';
 
-        if (file_exists($query_file_cache) && (time() - _PIXABAY_IMAGES_QUERY_CACHE_EXPIRE_TIME < filemtime($query_file_cache))) :
-            return file_get_contents($query_file_cache);
-        else:
-            # ini_set("default_socket_timeout", 10);
-            $ctx=stream_context_create(array('http'=>array('timeout' => 5)));
-            # allow 5 seconds to replay; Anyway, over 3 seconds any user begins to lose patience; fallback to another site;
-            $pixabay_api_url = add_query_arg($query, 'http://pixabay.com/api/');
-            $pixabay_api_data = @file_get_contents($pixabay_api_url, false, $ctx);
-            if ($pixabay_api_data !== false) {
-                @file_put_contents($query_file_cache, $pixabay_api_data);
-                return $pixabay_api_data;
-            } else {
-                return 'Unknown API request error';
-            }
+        if (file_exists($query_file_cache) && (time() - 86400 < filemtime($query_file_cache))):
+            $cached_results = @file_get_contents($query_file_cache);
+            if ($cached_results) return $cached_results;
         endif;
+
+        $pixabay_api_url = add_query_arg($query, 'http://pixabay.com/api/');
+        $pixabay_api_data = wp_remote_retrieve_body( wp_remote_get($pixabay_api_url) );
+        if ($pixabay_api_data !== false) {
+            @file_put_contents($query_file_cache, $pixabay_api_data);
+            return $pixabay_api_data;
+        } else {
+            return 'API request error';
+        }
     }
 
 	#~~~ the page must have a title, library tab does not work otherwise
@@ -66,7 +64,7 @@
                 endforeach;
                 if (absint($pixabay_api_request['page']) == ceil(240/_PIXABAY_IMAGES_RESULT_PER_PAGE)):
                     if ($pixabay_api_request['search_term'] != ''):
-                        $tpl_items .= '<br style="clear:both" /><div style="font-weight:bold;font-size:14px;text-align:center;margin:20px 5px 10px 0"><a target="_blank" href="http://pixabay.com/en/photos/?q='.$pixabay_api_request['search_term'].'&orientation='.$pixabay_api_request['orientation'].'&image_type='.$pixabay_api_request['image_type'].'">Find more images about "'.$pixabay_api_request['search_term'].'" on Pixabay</a></div>';
+                        $tpl_items .= '<br style="clear:both" /><div style="font-weight:bold;font-size:14px;text-align:center;margin:20px 5px 10px 0"><a target="_blank" href="http://pixabay.com/en/photos/?q='.urlencode($pixabay_api_request['search_term']).'&orientation='.$pixabay_api_request['orientation'].'&image_type='.$pixabay_api_request['image_type'].'">Find more images about "'.htmlspecialchars($pixabay_api_request['search_term']).'" on Pixabay</a></div>';
                     else:
                         $tpl_items .= '<br style="clear:both" /><div style="font-weight:bold;font-size:14px;text-align:center;margin:20px 5px 10px 0"><a target="_blank" href="http://pixabay.com/en/photos/">Find more images on Pixabay</a></div>';
                     endif;

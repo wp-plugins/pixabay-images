@@ -2,40 +2,37 @@
 if (!is_admin()) die();
 
 if (isset($_POST['pixabay_upload'])) {
-
 	if ( !isset($_POST['post_id']) ) die('Cheatin uh?');
+	$post_id = $_POST['post_id'];
+	if ( !is_numeric( $post_id ) ) die('Cheatin uh?');
 
-	$post_id = $_POST['post_id'];	
-	if ( !is_numeric( $post_id ) ) die('Cheatin uh?');	
-	
-	# function from wp-pluggable-for-pixabay.php is imported from pluggable.php (only the absolutely necessary)
-	# without this current_user_can not working here !!!
-	# this should not interefere with other plugins. This file is included only when the insert button is pressed, otherwise it is not included !!!
-	# and were kept checking if function already exists - function_exists (...)
-	require_once('wp-pluggable-for-pixabay.php'); 
-	
-	if ( !current_user_can('edit_post', $post_id) )  die('Cheatin uh?');
-	
+	# Function from wp-pluggable-for-pixabay.php is imported from pluggable.php
+	# Without this current_user_can not working here!
+	# This should not interefere with other plugins. This file is included only when the insert button is pressed.
+	require_once('wp-pluggable-for-pixabay.php');
+
+	if ( !current_user_can('edit_post', $post_id) ) die('Cheatin uh?');
+
 	$source_url = $_POST['source_url'];
 	$tags = $_POST['tags'];
 	$page_url = $_POST['page_url'];
 	$image_user = $_POST['image_user'];
 
-	pixabay_upload_image_from_url_to_post($source_url, $tags, $page_url, $image_user, $post_id);
-	exit;
-}
-
-function json_response($result, $msg) {
-	return json_encode(array('result'=>$result, 'msg'=>$msg));
-}
-
-function pixabay_upload_image_from_url_to_post($source_url, $tags, $page_url, $image_user, $post_id=0) {
-
-	$data = @file_get_contents($source_url);
-	if ($data === FALSE) die(json_response(0, "ERROR - Source not available: ".$source_url));
+    // upload image file
+    if (ini_get('allow_url_fopen')) {
+        $data = file_get_contents($source_url);
+    } elseif (function_exists('curl_init')) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $source_url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $data = curl_exec($ch);
+        curl_close($ch);
+    } else {
+        die(json_response(0, "This plugin requires the cURL module or the 'allow_url_fopen' option enabled. Please check your php.ini."));
+    }
 
 	$path_parts = pathinfo($source_url);
-
 	$tag_list = explode(',' , $tags);
 	array_splice($tag_list, 10);
 	foreach ($tag_list as $index=>$tag) $tag_list[$index] = trim($tag);
@@ -57,6 +54,12 @@ function pixabay_upload_image_from_url_to_post($source_url, $tags, $page_url, $i
 	$image_title = ucwords(implode(', ', $tag_list));
     $attachment_caption = ''.$image_user.' / <a href="'.$page_url.'">Pixabay</a>';
 	wp_insert_attachment_to_post($target_file_name, $image_title, $attachment_caption, $post_id);
+
+	exit;
+}
+
+function json_response($result, $msg) {
+	return json_encode(array('result'=>$result, 'msg'=>$msg));
 }
 
 function wp_insert_attachment_to_post($filename, $image_title, $attachment_caption, $parent_post_id=0) {

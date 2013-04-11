@@ -1,10 +1,10 @@
 === Pixabay Images ===
-Contributors: byrev, Simon Steinberger (Pixabay)
+Contributors: byrev, SimonStone
 Donate link: http://byrev.org/donate.php
 Tags: images, photos, pictures, photography, cliparts, clip arts, public domain, copyright free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
 Tested up to: 3.5.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,10 @@ For details about specific pictures, the plugin's preview window includes a link
 
 = 1.0 =
 * Initial release
+
+= 1.1 =
+
+* Solve bug about retrieving images from source.
 
 == Upgrade Notice ==
 

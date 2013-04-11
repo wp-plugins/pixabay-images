@@ -4,15 +4,20 @@
 Plugin Name: Pixabay Images
 Plugin URI: http://pixabay.com/en/blog/posts/pixabay-plugin-for-wordpress-36/
 Description: Find quality CC0 public domain images for commercial use, and add them to your blog with just a click. Attribution is not required.
-Version: 1.0
-Author: Emilian Robert Vicol / Pixabay
-Author URI: http://profiles.wordpress.org/byrev/
-License:  GPLv2
+Version: 1.1
+Author: Emilian Robert Vicol
+Author URI: http://efs.byrev.org/
+License: GPLv2
 */
 
-define('_PIXABAY_IMAGES_PLUGIN_VERSION', '1.0');
+define('_PIXABAY_IMAGES_PLUGIN_VERSION', '1.1');
 define('_PIXABAY_IMAGES_STATIC_URL', plugin_dir_url(__FILE__).'static/' );
 define('_PIXABAY_IMAGES_DB_OPTION_NAME', 'pixabay_images');
+
+#~~~ CoAuthor, Plugin Info (metalinks added in plugins blog page)
+global $pixabay_mealink_plugin;
+$pixabay_mealink_plugin[] = array('prename' => 'Co Author', 'name' => 'Simon Steinberger', 'uri' => 'http://pixabay.com/en/users/Simon/');
+$pixabay_mealink_plugin[] = array('prename' => 'Images Source', 'name' => 'Pixabay', 'uri' => 'http://pixabay.com/');
 
 #~~~ init options
 global $default_pixabay_options;
@@ -42,18 +47,27 @@ if (isset($_POST[_PIXABAY_IMAGES_DB_OPTION_NAME])) {
 if (isset($_POST['pixabay_upload'])) {
 	byrev_pixabay_load_plugin();
 	include('wp-upload-image.php');
-	//exit;
 }
 
-#~~~
-add_action('wp_head', 'pixabay_wp_head');
-function pixabay_wp_head() {
-?>
-<script type="text/javascript">
-
-</script>
-<?php
-}
+#~~ add mata info in plugins page - coauthor, images source, etc.
+function pixabay_plugin_links($links, $file) {  
+	$plugin = plugin_basename(__FILE__);  
+  
+	if ($file == $plugin) :
+		global $pixabay_mealink_plugin;
+		
+		$_new_meta_links = array();
+		foreach ($pixabay_mealink_plugin as $metalink):
+			$_new_meta_links[] = $metalink['prename'].': <a href="'.$metalink['uri'].'">' . __($metalink['name']) . '</a>';
+		endforeach;
+		
+		return array_merge( $links, $_new_meta_links );  
+	endif;
+	
+	return $links;  
+}  
+  
+add_filter( 'plugin_row_meta', 'pixabay_plugin_links', 10, 2 );  
 
 #~~~ admin init
 add_action('admin_init','byrev_pixabay_load_plugin');
@@ -132,6 +146,5 @@ function byrev_pixabay_deactivate() {
 function byrev_pixabay_uninstall() {
 	delete_option( _PIXABAY_IMAGES_DB_OPTION_NAME );
 }
-
 
 ?>

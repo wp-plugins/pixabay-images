@@ -1,10 +1,9 @@
 <?php
-define('_PIXABAY_IMAGES_QUERY_CACHE_EXPIRE_TIME', 86400); # 1 day expire cache
 define('_PIXABAY_IMAGES_RESULT_PER_PAGE', 26);
 
 /************* CREATE CACHE FOLDER ***************/
-$_wp_upload_dir = wp_upload_dir(); 
-$_wp_upload_basedir = $_wp_upload_dir['basedir']; 
+$_wp_upload_dir = wp_upload_dir();
+$_wp_upload_basedir = $_wp_upload_dir['basedir'];
 define('_PIXABAY_IMAGES_QUERY_CACHE_FOLDER', $_wp_upload_basedir.'/cache~pixabay');
 
 if (!is_dir(_PIXABAY_IMAGES_QUERY_CACHE_FOLDER)) {
