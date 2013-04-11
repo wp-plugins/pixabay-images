@@ -1,5 +1,5 @@
 === Pixabay Images ===
-Contributors: Emilian Robert Vicol, Simon Steinberger (Pixabay)
+Contributors: byrev, Simon Steinberger (Pixabay)
 Donate link: http://byrev.org/donate.php
 Tags: images, photos, pictures, photography, cliparts, clip arts, public domain, copyright free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
