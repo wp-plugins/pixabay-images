@@ -19,18 +19,12 @@ if (isset($_POST['pixabay_upload'])) {
 	$image_user = $_POST['image_user'];
 
     // upload image file
-    if (ini_get('allow_url_fopen')) {
-        $data = file_get_contents($source_url);
-    } elseif (function_exists('curl_init')) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $source_url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $data = curl_exec($ch);
-        curl_close($ch);
-    } else {
-        die(json_response(0, "This plugin requires the cURL module or the 'allow_url_fopen' option enabled. Please check your php.ini."));
-    }
+	$response = wp_remote_get( $source_url );
+	if( is_wp_error( $response ) ) {
+	   $error_message = $response->get_error_message();
+	   die(json_response(0, "Something went wrong: ". $error_message));
+	}
+	$data = $response['body'];
 
 	$path_parts = pathinfo($source_url);
 	$tag_list = explode(',' , $tags);
