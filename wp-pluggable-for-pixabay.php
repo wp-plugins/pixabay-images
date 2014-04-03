@@ -10,6 +10,7 @@ if ( !function_exists('wp_get_current_user') ) :
  *
  * @return WP_User Current user WP_User object
  */
+ 
 function wp_get_current_user() {
 	global $current_user;
 

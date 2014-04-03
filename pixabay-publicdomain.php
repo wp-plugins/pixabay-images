@@ -29,7 +29,7 @@
 	if (_EDIT_POST_ID != 0) {
 		$post_tile = get_the_title(_EDIT_POST_ID);
 		if ($post_tile == "Auto Draft"):
-			echo '<div style="margin:1px 0 10px;color:#b94a48;background:#f3f3f3;border-bottom:1px solid #eee;padding:8px;text-align:center;font-weight:bold">Note: Before inserting images with this plugin, please enter a title to the corresponding post or page.</div>';
+			echo '<div style="margin:1px 0 10px;color:#b94a48;background:#f3f3f3;border-bottom:1px solid #eee;padding:8px;text-align:center;font-weight:bold">Note: Before inserting Pixabay images, please enter a title to the corresponding post or page.</div>';
 			$_MEDIA_TAB = 'gallery';
 		endif;
 	}
@@ -43,6 +43,7 @@
 
 	$tpl_items = '';
 	if (_PIXABAY_NEW_REQUEST) :
+        $pixabay_api_request['search_term'] = urlencode($pixabay_api_request['search_term']);
 		$response_data = byrev_api_pixabay_run_query($pixabay_api_request);
 		$data = json_decode($response_data, true);
 		if ($data == ''):
@@ -89,11 +90,12 @@
 			<form target="_blank" style="margin-left: 5px; display: inline-block; zoom: 1; *display: inline; opacity: 0.8; filter: alpha(opacity=80);" action="https://www.paypal.com/cgi-bin/webscr" method="post">
                 <input type="hidden" name="cmd" value="_s-xclick" />
                 <input type="hidden" name="hosted_button_id" value="FWF6TBRWZDUXA" />
-				<input type="submit" style="line-height:20px;height:21px;padding:0 8px 1px" title="PayPal" value="Donate" />
+				<input type="submit" class="button" title="PayPal" value="Donate" />
 			</form>
 			'
 	);
 ?>
+
 <div id="tpl_wrapper">
 	<?=tpl_get_html($tpl_form, $var_form );?>
 	<?php if (!_PIXABAY_NEW_REQUEST) : echo tpl_get_html($tpl_info_init_search, $var_info_init_search ); endif;	?>

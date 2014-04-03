@@ -1,4 +1,5 @@
 <?php
+
 if (!is_admin()) die();
 
 if (isset($_POST['pixabay_upload'])) {

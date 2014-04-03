@@ -3,8 +3,8 @@ Contributors: byrev, SimonStone
 Donate link: http://byrev.org/donate.php
 Tags: images, photos, pictures, photography, cliparts, clip arts, public domain, copyright free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
-Tested up to: 3.5.1
-Stable tag: 1.1
+Tested up to: 3.8.1
+Stable tag: 1.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ Find quality CC0 public domain images for commercial use, and add them to your b
 Features include:
 
 * Search Pixabay's public domain pictures via "Add Media" button inside the editor.
-* Filter search results by image type (clipart, photo) and/or orientation (landscape, portrait).
+* Filter search results by image type (clipart, photo) and/or orientation (landscape, portrait)!
 * Preview images in paginated search results.
 * Direct image uploads to WordPress' media library.
 * Use of standard media dialogues for editing and inserting images.
@@ -54,11 +54,17 @@ For details about specific pictures, the plugin's preview window includes a link
 == Changelog ==
 
 = 1.0 =
+
 * Initial release
 
 = 1.1 =
 
-* Solve bug about retrieving images from source.
+* Solved bug about retrieving images from source
+
+= 1.2 =
+
+* Fixed multiple keyword search
+* Fixed layout bugs in Chrome
 
 == Upgrade Notice ==
 

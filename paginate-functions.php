@@ -12,7 +12,7 @@ else
 return $pageURL;
 }
 
-// Function to generate pagination array - that is a list of links for pages navigation
+// Function to generate pagination array - that is a list of links for pages navigation .
 function paginate ($base_url, $query_str, $total_pages, $current_page, $paginate_limit)
 {
     // Array to store page link list

@@ -3,14 +3,14 @@
 /*
 Plugin Name: Pixabay Images
 Plugin URI: http://pixabay.com/en/blog/posts/pixabay-plugin-for-wordpress-36/
-Description: Find quality CC0 public domain images for commercial use, and add them to your blog with just a click. Attribution is not required.
-Version: 1.1
+Description: Find quality CC0 public domain images for commercial use, and add them to your blog with just a click. Attribution is not required!
+Version: 1.2
 Author: Emilian Robert Vicol
 Author URI: http://efs.byrev.org/
 License: GPLv2
 */
 
-define('_PIXABAY_IMAGES_PLUGIN_VERSION', '1.1');
+define('_PIXABAY_IMAGES_PLUGIN_VERSION', '1.2');
 define('_PIXABAY_IMAGES_STATIC_URL', plugin_dir_url(__FILE__).'static/' );
 define('_PIXABAY_IMAGES_DB_OPTION_NAME', 'pixabay_images');
 
@@ -50,24 +50,24 @@ if (isset($_POST['pixabay_upload'])) {
 }
 
 #~~ add mata info in plugins page - coauthor, images source, etc.
-function pixabay_plugin_links($links, $file) {  
-	$plugin = plugin_basename(__FILE__);  
-  
+function pixabay_plugin_links($links, $file) {
+	$plugin = plugin_basename(__FILE__);
+
 	if ($file == $plugin) :
 		global $pixabay_mealink_plugin;
-		
+
 		$_new_meta_links = array();
 		foreach ($pixabay_mealink_plugin as $metalink):
 			$_new_meta_links[] = $metalink['prename'].': <a href="'.$metalink['uri'].'">' . __($metalink['name']) . '</a>';
 		endforeach;
-		
-		return array_merge( $links, $_new_meta_links );  
+
+		return array_merge( $links, $_new_meta_links );
 	endif;
-	
-	return $links;  
-}  
-  
-add_filter( 'plugin_row_meta', 'pixabay_plugin_links', 10, 2 );  
+
+	return $links;
+}
+
+add_filter( 'plugin_row_meta', 'pixabay_plugin_links', 10, 2 );
 
 #~~~ admin init
 add_action('admin_init','byrev_pixabay_load_plugin');

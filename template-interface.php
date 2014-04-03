@@ -27,4 +27,5 @@ function tpl_get_html( $tpl, $search_replace ) {
 	endforeach;
 	return $html;
 }
+
 ?>

@@ -1,7 +1,7 @@
 <?php
 define('_PIXABAY_IMAGES_RESULT_PER_PAGE', 26);
 
-/************* CREATE CACHE FOLDER ***************/
+/************* CREATE CACHE FOLDER  ***************/
 $_wp_upload_dir = wp_upload_dir();
 $_wp_upload_basedir = $_wp_upload_dir['basedir'];
 define('_PIXABAY_IMAGES_QUERY_CACHE_FOLDER', $_wp_upload_basedir.'/cache~pixabay');
@@ -49,7 +49,7 @@ $request_parameters_info = array (
 	'search_term' => array('type'=>'text', 'values' => "", 'title'=> 'Search'),
 	#'lang' => array('type'=>'select', 'values' => array('en', 'id','cs','de','es','fr','it','nl','no','hu','ru','pl','pt','ro','fi','sv','tr','ja','ko','zh') , 'title'=> 'Language'),
 	'image_type' => array('type'=>'radio', 'values' => array("all", "photo", "clipart" ), 'title'=> 'Image type'),
-	'orientation' => array('type'=>'radio', 'values' => array("all", "landscape", "portrait"), 'title'=> 'Orientation') ,
+	'orientation' => array('type'=>'radio', 'values' => array("all", "horizontal", "vertical"), 'title'=> 'Orientation') ,
 );
 
 /************* POST ID **************/

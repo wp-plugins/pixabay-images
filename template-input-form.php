@@ -7,7 +7,7 @@ function _print_form_radio($name, $param, $selected) {
 	$str = '';
 	foreach ($param as $p) :
 		if ($selected ==  $p) $s='checked="checked"'; else $s='';
-		$str .= '<label><input '.$s.' type="radio" name="'.$name.'" value="'.$p.'" /> '.ucfirst($p).'</label>';
+		$str .= '<label><input '.$s.' type="radio" name="'.$name.'" value="'.$p.'" />'.ucfirst($p).'</label>';
 	endforeach;
 	return $str;
 }
@@ -26,9 +26,10 @@ function byrev_print_form($script, $request_parameters_info, $pixabay_api_reques
 		} else {
 			$echo .=  'INPUT TYPE: '.$input_type.' - '.$name.'<br />';
 		}
+		
 	endforeach;
 	$echo .= '<input type="hidden" value="'._EDIT_POST_ID.'" name="post_id" />';
-	$echo .=  '<div style="clear: both;"></div><input type="hidden" name="tab" value="pixabaytab" /><input type="submit" value="Search Images"></form>';
+	$echo .=  '<div style="clear: both;"></div><input type="hidden" name="tab" value="pixabaytab" /><input class="button" type="submit" value="Search Images"></form>';
 	return $echo;
 }
 ?>
