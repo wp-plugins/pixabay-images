@@ -5,7 +5,7 @@ function pixabay_images_add_settings_menu() {
     add_options_page(__('Pixabay Images Settings', 'pixabay_images'), __('Pixabay Images', 'pixabay_images'), 'manage_options', 'pixabay_images_settings', 'pixabay_images_settings_page');
     add_action('admin_init', 'register_pixabay_images_options');
 }
-
+  
 
 function register_pixabay_images_options(){
     register_setting('pixabay_images_options', 'pixabay_images_options', 'pixabay_images_options_validate');
