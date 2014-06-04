@@ -16,7 +16,7 @@ function register_pixabay_images_options(){
     add_settings_field('orientation-id', __('Orientation', 'pixabay_images'), 'pixabay_images_render_orientation', 'pixabay_images_settings', 'pixabay_images_options_section');
     add_settings_field('attribution-id', __('Attribution', 'pixabay_images'), 'pixabay_images_render_attribution', 'pixabay_images_settings', 'pixabay_images_options_section');
     add_settings_field('button-id', __('Button', 'pixabay_images'), 'pixabay_images_render_button', 'pixabay_images_settings', 'pixabay_images_options_section');
-}
+} 
 
 
 function pixabay_images_render_language(){

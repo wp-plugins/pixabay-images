@@ -10,7 +10,6 @@ Author URI: http://pixabay.com/users/Simon/
 License: GPLv2
 */
 
-
 // i18n
 add_action('plugins_loaded', 'pixabay_images_load_textdomain');
 function pixabay_images_load_textdomain() {
