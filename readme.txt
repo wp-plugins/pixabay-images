@@ -1,28 +1,28 @@
 === Pixabay Images ===
-Contributors: byrev, SimonStone
+Contributors: SimonStone, byrev
 Donate link: http://byrev.org/donate.php
-Tags: images, photos, pictures, photography, cliparts, clip arts, public domain, copyright free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
+Tags: images, photos, pictures, cliparts, clip arts, royalty-free, public domain, copyright-free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
-Tested up to: 3.8.1
-Stable tag: 1.2
+Tested up to: 3.9.1
+Stable tag: 2.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Find quality CC0 public domain images for commercial use, and add them to your blog with just a click. Attribution is not required.
+Find quality CC0 public domain images for commercial use, and add them to your blog with just a click - attribution is voluntary.
 
 == Description ==
 
-[Pixabay Images](http://pixabay.com/en/blog/posts/pixabay-plugin-for-wordpress-36/) is a WordPress plugin that let's you pick CC0 public domain pictures from [Pixabay](http://pixabay.com/) and insert them with just a click anywhere on your blog. The images are safe to use, and paying attribution or linking back to the source is not required.
+[Pixabay Images](http://pixabay.com/blog/posts/p-36/) is a WordPress plugin that let's you pick CC0 public domain pictures from [Pixabay](http://pixabay.com/) and insert them with just a click anywhere on your blog. The images are safe to use, and paying attribution or linking back to the source is not required.
 
 Features include:
 
 * Search Pixabay's public domain pictures via "Add Media" button inside the editor.
-* Filter search results by image type (clipart, photo) and/or orientation (landscape, portrait)!
+* Filter search results by image type (clipart, photo) and/or orientation (landscape, portrait).
 * Preview images in paginated search results.
 * Direct image uploads to WordPress' media library.
 * Use of standard media dialogues for editing and inserting images.
 
-For more information, check out [Pixabay.com](http://pixabay.com/en/blog/posts/pixabay-plugin-for-wordpress-36/).
+For more information, check out [Pixabay.com](http://pixabay.com/blog/posts/p-36/).
 
 == Installation ==
 
@@ -40,9 +40,9 @@ CC0 1.0 Universal is Creative Commons' most recent public domain dedication, whi
 
 You are free to adapt and use the images for commercial purposes without attributing the original author or source. Although absolutely not required, a link back to Pixabay is appreciated. Learn more in this article about: [public domain images and their limitations](http://pixabay.com/en/blog/posts/public-domain-images-what-is-allowed-and-what-is-4/)
 
-= Where do I get further legal information about Pixabay and/or the provided images? =
+= Where do I get further information about Pixabay? =
 
-For details about specific pictures, the plugin's preview window includes a link to the image's source page on Pixabay ('Visit page'). For other questions you may want to read [Pixabay's Terms of Use](http://pixabay.com/en/service/terms/).
+Read Pixabay's [FAQ](http://pixabay.com/service/faq/) and/or their [Terms of Use](http://pixabay.com/service/terms/) to learn more.
 
 == Screenshots ==
 
@@ -65,6 +65,13 @@ For details about specific pictures, the plugin's preview window includes a link
 
 * Fixed multiple keyword search
 * Fixed layout bugs in Chrome
+
+= 2.0 =
+
+* Responsive layout for WordPress 3.9+
+* Added localization/translations
+* Added plugin settings page
+* Added higher resolution images
 
 == Upgrade Notice ==
 
