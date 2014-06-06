@@ -9,12 +9,11 @@ Author: Simon Steinberger
 Author URI: http://pixabay.com/users/Simon/
 License: GPLv2
 */
-  
+
+
 // i18n
+function pixabay_images_load_textdomain() { load_plugin_textdomain('pixabay_images', false, dirname(plugin_basename(__FILE__ )).'/langs/'); }
 add_action('plugins_loaded', 'pixabay_images_load_textdomain');
-function pixabay_images_load_textdomain() {
-    load_plugin_textdomain('pixabay_images', false, dirname(plugin_basename(__FILE__ )).'/langs/');
-}
 
 
 // add settings
@@ -22,13 +21,16 @@ require_once(plugin_dir_path(__FILE__)."settings.php");
 
 
 // add tab to media upload window
-add_filter('media_upload_tabs', function($tabs){ $tabs['pixabaytab'] = __('Pixabay Images', 'pixabay_images'); return $tabs; });
+function media_upload_tabs_handler($tabs) { $tabs['pixabaytab'] = __('Pixabay Images', 'pixabay_images'); return $tabs; }
+add_filter('media_upload_tabs', 'media_upload_tabs_handler');
 
 
 // add button next to "Add Media"
 $pixabay_images_settings = get_option('pixabay_images_options');
-if (!$pixabay_images_settings['button'] | $pixabay_images_settings['button']=='true')
-    add_filter('media_buttons_context', function($editor_id=''){ return '<a href="'.add_query_arg('tab', 'pixabaytab', esc_url(get_upload_iframe_src())).'" id="'.esc_attr($editor_id).'-add_media" class="thickbox button" title="'.esc_attr__('Pixabay Images', 'pixabay_images').'"><img style="position:relative;top:-1px" src="'.plugin_dir_url(__FILE__).'favicon.ico'.'"> Pixabay</a>'; });
+if (!$pixabay_images_settings['button'] | $pixabay_images_settings['button']=='true') {
+    function media_buttons_context_handler($editor_id='') { return '<a href="'.add_query_arg('tab', 'pixabaytab', esc_url(get_upload_iframe_src())).'" id="'.esc_attr($editor_id).'-add_media" class="thickbox button" title="'.esc_attr__('Pixabay Images', 'pixabay_images').'"><img style="position:relative;top:-1px" src="'.plugin_dir_url(__FILE__).'favicon.ico'.'"> Pixabay</a>'; }
+    add_filter('media_buttons_context', 'media_buttons_context_handler');
+}
 
 
 // media tab action
@@ -208,7 +210,8 @@ function media_pixabay_images_tab() {
         </script>
     <?
 }
-add_action('media_upload_pixabaytab', function(){ wp_iframe('media_pixabay_images_tab'); });
+function media_upload_pixabaytab_handler() { wp_iframe('media_pixabay_images_tab'); }
+add_action('media_upload_pixabaytab', 'media_upload_pixabaytab_handler');
 
 
 if (isset($_POST['pixabay_upload'])) {
