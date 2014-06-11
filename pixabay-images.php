@@ -4,7 +4,7 @@
 Plugin Name: Pixabay Images
 Plugin URI: http://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.0
+Version: 2.1
 Author: Simon Steinberger
 Author URI: http://pixabay.com/users/Simon/
 License: GPLv2
