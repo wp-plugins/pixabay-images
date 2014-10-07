@@ -3,8 +3,8 @@ Contributors: SimonStone, byrev
 Donate link: http://byrev.org/donate.php
 Tags: images, photos, pictures, cliparts, clip arts, royalty-free, public domain, copyright-free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
-Tested up to: 3.9.1
-Stable tag: 2.1
+Tested up to: 4.0
+Stable tag: 2.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,11 @@ Read Pixabay's [FAQ](http://pixabay.com/service/faq/) and/or their [Terms of Use
 = 2.1 =
 
 * Fixed bug for PHP versions lower than 5.3
+
+= 2.2 =
+
+* Fixed image URL in settings
+* Tested plugin for WordPress 4.0
 
 == Upgrade Notice ==
 
