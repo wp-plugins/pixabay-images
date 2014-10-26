@@ -1,14 +1,14 @@
 === Pixabay Images ===
 Contributors: SimonStone, byrev
 Donate link: http://byrev.org/donate.php
-Tags: images, photos, pictures, cliparts, clip arts, royalty-free, public domain, copyright-free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
+Tags: images, photos, pictures, cliparts, clip arts, illustrations, vectors, vector graphics, stock photos, stock images, stock pictures, royalty-free, public domain, pd, copyright-free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
 Tested up to: 4.0
-Stable tag: 2.2
+Stable tag: 2.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Find quality CC0 public domain images for commercial use, and add them to your blog with just a click - attribution is voluntary.
+Find quality CC0 Public Domain images for commercial use, and add them to your blog with just a click - attribution is voluntary.
 
 == Description ==
 
@@ -17,7 +17,7 @@ Find quality CC0 public domain images for commercial use, and add them to your b
 Features include:
 
 * Search Pixabay's public domain pictures via "Add Media" button inside the editor.
-* Filter search results by image type (clipart, photo) and/or orientation (landscape, portrait).
+* Filter search results by image type (clipart, photo) and/or orientation (horizontal, vertical).
 * Preview images in paginated search results.
 * Direct image uploads to WordPress' media library.
 * Use of standard media dialogues for editing and inserting images.
@@ -34,11 +34,11 @@ For more information, check out [Pixabay.com](http://pixabay.com/blog/posts/p-36
 
 = What does the term 'CC0' mean? =
 
-CC0 1.0 Universal is Creative Commons' most recent public domain dedication, which is applied to all images on Pixabay.com.
+CC0 1.0 Universal is Creative Commons' Public Domain dedication, which is used for all images on Pixabay.com.
 
 = Are there any restrictions or requirements for using these images? =
 
-You are free to adapt and use the images for commercial purposes without attributing the original author or source. Although absolutely not required, a link back to Pixabay is appreciated. Learn more in this article about: [public domain images and their limitations](http://pixabay.com/en/blog/posts/public-domain-images-what-is-allowed-and-what-is-4/)
+You are free to adapt and use the images for commercial purposes without attributing the original author or source. Although absolutely not required, a link back to Pixabay is appreciated. Learn more in this article about: [public domain images and their limitations](http://pixabay.com/blog/posts/public-domain-images-4/)
 
 = Where do I get further information about Pixabay? =
 
@@ -46,10 +46,13 @@ Read Pixabay's [FAQ](http://pixabay.com/service/faq/) and/or their [Terms of Use
 
 == Screenshots ==
 
-1. Search results.
-2. Preview image including link to full resolution source.
-3. Standard media dialogue for selected image.
-4. Pixabay Images in WordPress' new Media Manager.
+1. Optional Pixabay Images button inside the WordPress blog post editor.
+2. Search results in WordPress' new Media Manager.
+3. Preview image on hover with a selection of three different sizes and a link to the original image on Pixabay.
+4. Standard media dialogue for selected image.
+5. Search results in popup window.
+6. Preview image in popup window with a selection of three different sizes and a link to the original image on Pixabay.
+7. Standard media dialogue in popup window for selected image.
 
 == Changelog ==
 
@@ -81,6 +84,11 @@ Read Pixabay's [FAQ](http://pixabay.com/service/faq/) and/or their [Terms of Use
 
 * Fixed image URL in settings
 * Tested plugin for WordPress 4.0
+
+= 2.3 =
+
+* Fixed: Plugin could not be activated with certain PHP settings
+* Updated icon and readme.txt
 
 == Upgrade Notice ==
 

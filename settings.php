@@ -1,4 +1,4 @@
-<?
+<?php
 
 add_action('admin_menu', 'pixabay_images_add_settings_menu');
 function pixabay_images_add_settings_menu() {
@@ -37,19 +37,19 @@ function pixabay_images_render_per_page(){
 function pixabay_images_render_image_type(){
     $options = get_option('pixabay_images_options');
     ?>
-    <label><input name="pixabay_images_options[image_type]" value="all" type="radio"<?= !$options['image_type'] | $options['image_type']=='all'?' checked="checked"':''; ?>> <?_e('All', 'pixabay_images');?></label>
-    <br><label><input name="pixabay_images_options[image_type]" value="photo" type="radio"<?= $options['image_type']=='photo'?' checked="checked"':''; ?>> <?_e('Photos', 'pixabay_images');?></label>
-    <br><label><input name="pixabay_images_options[image_type]" value="clipart" type="radio"<?= $options['image_type']=='clipart'?' checked="checked"':''; ?>> <?_e('Cliparts', 'pixabay_images');?></label>
-    <?
+    <label><input name="pixabay_images_options[image_type]" value="all" type="radio"<?= !$options['image_type'] | $options['image_type']=='all'?' checked="checked"':''; ?>> <?= _e('All', 'pixabay_images'); ?></label>
+    <br><label><input name="pixabay_images_options[image_type]" value="photo" type="radio"<?= $options['image_type']=='photo'?' checked="checked"':''; ?>> <?= _e('Photos', 'pixabay_images'); ?></label>
+    <br><label><input name="pixabay_images_options[image_type]" value="clipart" type="radio"<?= $options['image_type']=='clipart'?' checked="checked"':''; ?>> <?= _e('Cliparts', 'pixabay_images'); ?></label>
+    <?php
 }
 
 function pixabay_images_render_orientation(){
     $options = get_option('pixabay_images_options');
     ?>
-    <label><input name="pixabay_images_options[orientation]" value="all" type="radio"<?= !$options['orientation'] | $options['orientation']=='all'?' checked="checked"':''; ?>> <?_e('All', 'pixabay_images');?></label>
-    <br><label><input name="pixabay_images_options[orientation]" value="horizotal" type="radio"<?= $options['orientation']=='horizotal'?' checked="checked"':''; ?>> <?_e('Hozizontal', 'pixabay_images');?></label>
-    <br><label><input name="pixabay_images_options[orientation]" value="vertical" type="radio"<?= $options['orientation']=='vertical'?' checked="checked"':''; ?>> <?_e('Vertical', 'pixabay_images');?></label>
-    <?
+    <label><input name="pixabay_images_options[orientation]" value="all" type="radio"<?= !$options['orientation'] | $options['orientation']=='all'?' checked="checked"':''; ?>> <?= _e('All', 'pixabay_images'); ?></label>
+    <br><label><input name="pixabay_images_options[orientation]" value="horizotal" type="radio"<?= $options['orientation']=='horizotal'?' checked="checked"':''; ?>> <?= _e('Hozizontal', 'pixabay_images'); ?></label>
+    <br><label><input name="pixabay_images_options[orientation]" value="vertical" type="radio"<?= $options['orientation']=='vertical'?' checked="checked"':''; ?>> <?= _e('Vertical', 'pixabay_images'); ?></label>
+    <?php
 }
 
 function pixabay_images_render_attribution(){
@@ -63,11 +63,11 @@ function pixabay_images_render_button(){
 }
 
 
-function pixabay_images_settings_page() {?>
+function pixabay_images_settings_page() { ?>
     <div class="wrap">
-    <h2><?_e('Pixabay Images', 'pixabay_images');?></h2>
+    <h2><?= _e('Pixabay Images', 'pixabay_images'); ?></h2>
     <form method="post" action="options.php">
-        <?
+        <?php
             settings_fields('pixabay_images_options');
             do_settings_sections('pixabay_images_settings');
             submit_button();
@@ -77,12 +77,12 @@ function pixabay_images_settings_page() {?>
     <p>Official <a href="http://pixabay.com/"><img src="http://pixabay.com/static/img/logo_640.png" style="width:120px;margin:0 5px;position:relative;top:4px"></a> plugin by <a href="http://efs.byrev.org/">Emilian Robert Vicol</a> and <a href="http://pixabay.com/service/imprint/">Simon Steinberger</a>.</p>
     <p>Find us on <a href="https://www.facebook.com/pixabay">Facebook</a>, <a href="https://plus.google.com/+Pixabay">Google+</a> and <a href="https://twitter.com/pixabay">Twitter</a>.</p>
     </div>
-<?}
+<?php }
 
 
 function pixabay_images_options_validate($input){
     $options = get_option('pixabay_images_options');
-    $languages = array('id' => 'Bahasa Indonesia', 'cs' => 'Čeština', 'de' => 'Deutsch', 'en' => 'English', 'es' => 'Español', 'fr' => 'Français', 'it' => 'Italiano', 'nl' => 'Nederlands', 'no' => 'Norsk', 'hu' => 'Magyar', 'ru' => 'Русский', 'pl' => 'Polski', 'pt' => 'Português', 'ro' => 'Română', 'fi' => 'Suomi', 'sv' => 'Svenska', 'tr' => 'Türkçe', 'ja' => '日本語', 'ko' => '한국어', 'zh' => '简体中文');
+    $languages = array('cs' => 'Čeština', 'da' => 'Dansk', 'de' => 'Deutsch', 'en' => 'English', 'es' => 'Español', 'fr' => 'Français', 'id' => 'Indonesia', 'it' => 'Italiano', 'hu' => 'Magyar', 'nl' => 'Nederlands', 'no' => 'Norsk', 'pl' => 'Polski', 'pt' => 'Português', 'ro' => 'Română', 'sk' => 'Slovenčina', 'fi' => 'Suomi', 'sv' => 'Svenska', 'tr' => 'Türkçe', 'vi' => 'Việt', 'th' => 'ไทย', 'bg' => 'Български', 'ru' => 'Русский', 'el' => 'Ελληνική', 'ja' => '日本語', 'ko' => '한국어', 'zh' => '简体中文');
     if ($languages[$input['language']]) $options['language'] = $input['language'];
     $per_page = intval($input['per_page']);
     if ($per_page >= 10 and $per_page <= 100) $options['per_page'] = $per_page;

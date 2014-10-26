@@ -1,10 +1,10 @@
-<?
+<?php
 
 /*
 Plugin Name: Pixabay Images
 Plugin URI: http://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.2
+Version: 2.3
 Author: Simon Steinberger
 Author URI: http://pixabay.com/users/Simon/
 License: GPLv2
@@ -28,7 +28,7 @@ add_filter('media_upload_tabs', 'media_upload_tabs_handler');
 // add button next to "Add Media"
 $pixabay_images_settings = get_option('pixabay_images_options');
 if (!$pixabay_images_settings['button'] | $pixabay_images_settings['button']=='true') {
-    function media_buttons_context_handler($editor_id='') { return '<a href="'.add_query_arg('tab', 'pixabaytab', esc_url(get_upload_iframe_src())).'" id="'.esc_attr($editor_id).'-add_media" class="thickbox button" title="'.esc_attr__('Pixabay Images', 'pixabay_images').'"><img style="position:relative;top:-1px" src="'.plugin_dir_url(__FILE__).'favicon.ico'.'"> Pixabay</a>'; }
+    function media_buttons_context_handler($editor_id='') { return '<a href="'.add_query_arg('tab', 'pixabaytab', esc_url(get_upload_iframe_src())).'" id="'.esc_attr($editor_id).'-add_media" class="thickbox button" title="'.esc_attr__('Pixabay Images', 'pixabay_images').'"><img style="position:relative;top:-2px" src="'.plugin_dir_url(__FILE__).'favicon.png'.'"> Pixabay</a>'; }
     add_filter('media_buttons_context', 'media_buttons_context_handler');
 }
 
@@ -60,14 +60,14 @@ function media_pixabay_images_tab() {
             <form id="pixabay_images_form" style="margin:0">
                 <p><input id="q" type="text" value="" style="width:100%;max-width:500px;padding:7px 9px"></p>
                 <p>
-                    <label style="margin-right:15px"><input type="checkbox" id="filter_photos"<?= $pixabay_images_settings['image_type']=='clipart'?'':' checked="checked"'; ?>><?_e('Photos', 'pixabay_images');?></label>
-                    <label style="margin-right:20px"><input type="checkbox" id="filter_cliparts"<?= $pixabay_images_settings['image_type']=='photo'?'':' checked="checked"'; ?>><?_e('Cliparts', 'pixabay_images');?></label>
+                    <label style="margin-right:15px"><input type="checkbox" id="filter_photos"<?= $pixabay_images_settings['image_type']=='clipart'?'':' checked="checked"'; ?>><?= _e('Photos', 'pixabay_images'); ?></label>
+                    <label style="margin-right:20px"><input type="checkbox" id="filter_cliparts"<?= $pixabay_images_settings['image_type']=='photo'?'':' checked="checked"'; ?>><?= _e('Cliparts', 'pixabay_images'); ?></label>
                     <span style="margin-right:20px">|</span>
-                    <label style="margin-right:15px"><input type="checkbox" id="filter_horizontal"<?= $pixabay_images_settings['orientation']=='vertical'?'':' checked="checked"'; ?>><?_e('Horizontal', 'pixabay_images');?></label>
-                    <label style="margin-right:25px"><input type="checkbox" id="filter_vertical"<?= $pixabay_images_settings['orientation']=='horizontal'?'':' checked="checked"'; ?>><?_e('Vertical', 'pixabay_images');?></label>
-                    <a href="options-general.php?page=pixabay_images_settings" target="_blank"><?_e('Settings', 'pixabay_images');?></a>
+                    <label style="margin-right:15px"><input type="checkbox" id="filter_horizontal"<?= $pixabay_images_settings['orientation']=='vertical'?'':' checked="checked"'; ?>><?= _e('Horizontal', 'pixabay_images'); ?></label>
+                    <label style="margin-right:25px"><input type="checkbox" id="filter_vertical"<?= $pixabay_images_settings['orientation']=='horizontal'?'':' checked="checked"'; ?>><?= _e('Vertical', 'pixabay_images'); ?></label>
+                    <a href="options-general.php?page=pixabay_images_settings" target="_blank"><?= _e('Settings', 'pixabay_images'); ?></a>
                 </p>
-                <input id="submit_search" class="button" type="submit" value="<?_e('Search', 'pixabay_images');?>">
+                <input id="submit_search" class="button" type="submit" value="<?= _e('Search', 'pixabay_images'); ?>">
             </form>
             <div id="pixabay_results" style="margin-top:25px;padding-top:25px;border-top:1px solid #ddd"></div>
         </div>
@@ -77,9 +77,9 @@ function media_pixabay_images_tab() {
             // hoverIntent r7
             (function(e){e.fn.hoverIntent=function(t,n,r){var i={interval:100,sensitivity:7,timeout:0};if(typeof t==="object"){i=e.extend(i,t)}else if(e.isFunction(n)){i=e.extend(i,{over:t,out:n,selector:r})}else{i=e.extend(i,{over:t,out:t,selector:n})}var s,o,u,a;var f=function(e){s=e.pageX;o=e.pageY};var l=function(t,n){n.hoverIntent_t=clearTimeout(n.hoverIntent_t);if(Math.abs(u-s)+Math.abs(a-o)<i.sensitivity){e(n).off("mousemove.hoverIntent",f);n.hoverIntent_s=1;return i.over.apply(n,[t])}else{u=s;a=o;n.hoverIntent_t=setTimeout(function(){l(t,n)},i.interval)}};var c=function(e,t){t.hoverIntent_t=clearTimeout(t.hoverIntent_t);t.hoverIntent_s=0;return i.out.apply(t,[e])};var h=function(t){var n=jQuery.extend({},t);var r=this;if(r.hoverIntent_t){r.hoverIntent_t=clearTimeout(r.hoverIntent_t)}if(t.type=="mouseenter"){u=n.pageX;a=n.pageY;e(r).on("mousemove.hoverIntent",f);if(r.hoverIntent_s!=1){r.hoverIntent_t=setTimeout(function(){l(n,r)},i.interval)}}else{e(r).off("mousemove.hoverIntent",f);if(r.hoverIntent_s==1){r.hoverIntent_t=setTimeout(function(){c(n,r)},i.timeout)}}};return this.on({"mouseenter.hoverIntent":h,"mouseleave.hoverIntent":h},i.selector)}})(jQuery)
 
-            var $=jQuery, post_id=<?=absint($_REQUEST['post_id'])?>,
+            var $=jQuery, post_id=<?=absint($_REQUEST['post_id']) ?>,
                 lang='<?= $pixabay_images_settings['language']?$pixabay_images_settings['language']:substr(get_locale(), 0, 2) ?>',
-                per_page=<?=$pixabay_images_settings['per_page']?$pixabay_images_settings['per_page']:30?>,
+                per_page=<?=$pixabay_images_settings['per_page']?$pixabay_images_settings['per_page']:30 ?>,
                 form = $('#pixabay_images_form'), hits, cache, resizeTimer, q, image_type, orientation;
 
             function resized() { if ($(window).width() < 768) $('.thumb').addClass('small'); else $('.thumb').removeClass('small'); }
@@ -166,16 +166,16 @@ function media_pixabay_images_tab() {
                         }
 
                         preview = $('<div data-idx="'+idx+'" class="preview">\
-                            <div title="<?=_e('Insert image')?>" style="padding:4px 5px 6px;margin:0 0 5px;text-align:left;border-bottom:1px solid #ddd">\
+                            <div title="<?= _e('Insert image') ?>" style="padding:4px 5px 6px;margin:0 0 5px;text-align:left;border-bottom:1px solid #ddd">\
                                 <a href="#" class="upload 150px" style="margin-right:15px">'+img.width()+' x '+img.height()+'</a>\
                                 <a href="#" class="upload 640px" style="margin-right:15px">'+width640+' x '+height640+'</a>\
                                 <a href="#" class="upload 1280px">'+width1280+' x '+height1280+'</a>\
                             </div>\
-                            <a title="<?=_e('Insert image')?>" href="#" class="upload 640px" style="display:block;margin:auto;position:relative;width:'+parseInt(width640/2)+'px;height:'+parseInt(height640/2)+'px;">\
+                            <a title="<?= _e('Insert image') ?>" href="#" class="upload 640px" style="display:block;margin:auto;position:relative;width:'+parseInt(width640/2)+'px;height:'+parseInt(height640/2)+'px;">\
                                 <img src="'+img.attr('src')+'" style="width:'+parseInt(width640/2)+'px !important;height:'+parseInt(height640/2)+'px !important;">\
                                 <img src="'+hits[idx].webformatURL+'" style="width:'+parseInt(width640/2)+'px !important;height:'+parseInt(height640/2)+'px !important;">\
                             </a>\
-                            <div style="padding:6px 5px 4px;margin:5px 0 0;text-align:left;border-top:1px solid #ddd"><?_e('CC0 Image by', 'pixabay_images');?> <a href="http://pixabay.com/users/'+hits[idx].user+'/" target="_blank">'+hits[idx].user+'</a> / <a href="http://pixabay.com/'+lang+'/photos/?image_type='+image_type+'&orientation='+orientation+'&q='+escapeJS(q)+'" target="_blank">Pixabay</a></div>\
+                            <div style="padding:6px 5px 4px;margin:5px 0 0;text-align:left;border-top:1px solid #ddd"><?= _e('CC0 Image by', 'pixabay_images'); ?> <a href="http://pixabay.com/users/'+hits[idx].user+'/" target="_blank">'+hits[idx].user+'</a> / <a href="http://pixabay.com/'+lang+'/photos/?image_type='+image_type+'&orientation='+orientation+'&q='+escapeJS(q)+'" target="_blank">Pixabay</a></div>\
                         </div>');
                         thumb.append(preview);
 
@@ -208,7 +208,7 @@ function media_pixabay_images_tab() {
                 return false;
             });
         </script>
-    <?
+    <?php
 }
 function media_upload_pixabaytab_handler() { wp_iframe('media_pixabay_images_tab'); }
 add_action('media_upload_pixabaytab', 'media_upload_pixabaytab_handler');
