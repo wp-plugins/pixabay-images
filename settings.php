@@ -74,7 +74,10 @@ function pixabay_images_settings_page() { ?>
         ?>
     </form>
     <hr style="margin-bottom:20px">
-    <p>Official <a href="http://pixabay.com/"><img src="http://pixabay.com/static/img/logo_640.png" style="width:120px;margin:0 5px;position:relative;top:4px"></a> plugin by <a href="http://efs.byrev.org/">Emilian Robert Vicol</a> and <a href="http://pixabay.com/service/imprint/">Simon Steinberger</a>.</p>
+    <p>
+        Official <a href="http://pixabay.com/"><img src="http://pixabay.com/static/img/logo_640.png" style="width:120px;margin:0 5px;position:relative;top:4px"></a> plugin by <a href="http://efs.byrev.org/">Emilian Robert Vicol</a> and <a href="http://pixabay.com/service/imprint/">Simon Steinberger</a>.
+        Serbian translation by <a href="http://firstsiteguide.com/">Ogi Djuraskovic</a>.
+    </p>
     <p>Find us on <a href="https://www.facebook.com/pixabay">Facebook</a>, <a href="https://plus.google.com/+Pixabay">Google+</a> and <a href="https://twitter.com/pixabay">Twitter</a>.</p>
     </div>
 <?php }
