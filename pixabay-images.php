@@ -73,7 +73,7 @@ function media_pixabay_images_tab() {
         </div>
         <script>
             function crossDomainAjax(c,a){if("XDomainRequest" in window&&window.XDomainRequest!==null){var b=new XDomainRequest();b.open("get",c);b.onload=function(){var e=new ActiveXObject("Microsoft.XMLDOM"),d=$.parseJSON(b.responseText);e.async=false;if(d==null||typeof(d)=="undefined"){d=$.parseJSON(data.firstChild.textContent)}a(d)};b.onerror=function(){_result=false};b.send()}else{if(navigator.userAgent.indexOf('MSIE')!=-1&&parseInt(navigator.userAgent.match(/MSIE ([\d.]+)/)[1])<8){return false}else{$.ajax({url:c,cache:false,dataType:"json",type:"GET",async:false,success:function(d,e){a(d)}})}}};
-            function escapeJS(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,"\\'");}
+            function escapejs(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,"\\'");}
             // hoverIntent r7
             (function(e){e.fn.hoverIntent=function(t,n,r){var i={interval:100,sensitivity:7,timeout:0};if(typeof t==="object"){i=e.extend(i,t)}else if(e.isFunction(n)){i=e.extend(i,{over:t,out:n,selector:r})}else{i=e.extend(i,{over:t,out:t,selector:n})}var s,o,u,a;var f=function(e){s=e.pageX;o=e.pageY};var l=function(t,n){n.hoverIntent_t=clearTimeout(n.hoverIntent_t);if(Math.abs(u-s)+Math.abs(a-o)<i.sensitivity){e(n).off("mousemove.hoverIntent",f);n.hoverIntent_s=1;return i.over.apply(n,[t])}else{u=s;a=o;n.hoverIntent_t=setTimeout(function(){l(t,n)},i.interval)}};var c=function(e,t){t.hoverIntent_t=clearTimeout(t.hoverIntent_t);t.hoverIntent_s=0;return i.out.apply(t,[e])};var h=function(t){var n=jQuery.extend({},t);var r=this;if(r.hoverIntent_t){r.hoverIntent_t=clearTimeout(r.hoverIntent_t)}if(t.type=="mouseenter"){u=n.pageX;a=n.pageY;e(r).on("mousemove.hoverIntent",f);if(r.hoverIntent_s!=1){r.hoverIntent_t=setTimeout(function(){l(n,r)},i.interval)}}else{e(r).off("mousemove.hoverIntent",f);if(r.hoverIntent_s==1){r.hoverIntent_t=setTimeout(function(){c(n,r)},i.timeout)}}};return this.on({"mouseenter.hoverIntent":h,"mouseleave.hoverIntent":h},i.selector)}})(jQuery)
 
@@ -124,14 +124,14 @@ function media_pixabay_images_tab() {
                 if (p==1)
                     s += '<span class="button disabled">Prev</span>';
                 else
-                    s += '<a href="#" onclick="return call_api(\''+escapeJS(q)+'\', '+(p-1)+');" class="button">Prev</a>';
+                    s += '<a href="#" onclick="return call_api(\''+escapejs(q)+'\', '+(p-1)+');" class="button">Prev</a>';
                 for (i=1; i < pages+1; i++) {
-                    s += '<a href="#" onclick="return call_api(\''+escapeJS(q)+'\', '+i+');" class="button'+(p==i?' disabled':'')+'">'+i+'</a>';
+                    s += '<a href="#" onclick="return call_api(\''+escapejs(q)+'\', '+i+');" class="button'+(p==i?' disabled':'')+'">'+i+'</a>';
                 }
                 if (p==pages)
-                    s += '<span class="button disabled">Prev</span>';
+                    s += '<span class="button disabled">Next</span>';
                 else
-                    s += '<a href="#" onclick="return call_api(\''+escapeJS(q)+'\', '+(p+1)+');" class="button">Next</a>';
+                    s += '<a href="#" onclick="return call_api(\''+escapejs(q)+'\', '+(p+1)+');" class="button">Next</a>';
                 s += '</div>';
                 $('#pixabay_results').html(s);
                 resized();
@@ -175,7 +175,7 @@ function media_pixabay_images_tab() {
                                 <img src="'+img.attr('src')+'" style="width:'+parseInt(width640/2)+'px !important;height:'+parseInt(height640/2)+'px !important;">\
                                 <img src="'+hits[idx].webformatURL+'" style="width:'+parseInt(width640/2)+'px !important;height:'+parseInt(height640/2)+'px !important;">\
                             </a>\
-                            <div style="padding:6px 5px 4px;margin:5px 0 0;text-align:left;border-top:1px solid #ddd"><?= _e('CC0 Image by', 'pixabay_images'); ?> <a href="http://pixabay.com/users/'+hits[idx].user+'/" target="_blank">'+hits[idx].user+'</a> / <a href="http://pixabay.com/'+lang+'/photos/?image_type='+image_type+'&orientation='+orientation+'&q='+escapeJS(q)+'" target="_blank">Pixabay</a></div>\
+                            <div style="padding:6px 5px 4px;margin:5px 0 0;text-align:left;border-top:1px solid #ddd"><?= _e('CC0 Image by', 'pixabay_images'); ?> <a href="http://pixabay.com/users/'+hits[idx].user+'/" target="_blank">'+hits[idx].user+'</a> / <a href="http://pixabay.com/'+lang+'/photos/?image_type='+image_type+'&orientation='+orientation+'&q='+escapejs(q)+'" target="_blank">Pixabay</a></div>\
                         </div>');
                         thumb.append(preview);
 
