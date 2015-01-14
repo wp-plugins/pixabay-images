@@ -235,8 +235,9 @@ if (isset($_POST['pixabay_upload'])) {
 	$q_tags = explode(' ' , $_POST['q']);
 	array_splice($q_tags, 2);
 	foreach ($q_tags as $k=>$v) {
-		// Remove ../../../..
-		$v = str_replace("..","",$v);
+		// remove ../../../..
+		$v = str_replace("..", "", $v);
+		$v = str_replace("/", "", $v);
 		$q_tags[$k] = trim($v);
 	}
     $path_info = pathinfo($_POST['image_url']);
