@@ -3,7 +3,7 @@ Contributors: SimonStone, byrev
 Donate link: http://byrev.org/donate.php
 Tags: images, photos, pictures, cliparts, clip arts, illustrations, vectors, vector graphics, stock photos, stock images, stock pictures, royalty-free, public domain, pd, copyright-free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
-Tested up to: 4.1
+Tested up to: 4.0
 Stable tag: 2.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -89,6 +89,10 @@ Read Pixabay's [FAQ](http://pixabay.com/service/faq/) and/or their [Terms of Use
 
 * Fixed: Plugin could not be activated with certain PHP settings
 * Updated icon and readme.txt
+
+= 2.4 =
+
+* Fixed security issues: Authentication bypass and path traversal attack (Thanks goes to Mogwai, IT-Sicherheitsberatung Munich)
 
 == Upgrade Notice ==
 

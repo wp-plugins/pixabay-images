@@ -4,7 +4,7 @@
 Plugin Name: Pixabay Images
 Plugin URI: http://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.3
+Version: 2.4
 Author: Simon Steinberger
 Author URI: http://pixabay.com/users/Simon/
 License: GPLv2
@@ -218,9 +218,15 @@ if (isset($_POST['pixabay_upload'])) {
     $post_id = absint($_REQUEST['post_id']);
     $pixabay_images_settings = get_option('pixabay_images_options');
 
-	# "pluggable.php" is required for current_user_can() and other upload relevant functions
+    # "pluggable.php" is required for current_user_can() and other upload relevant functions
     require_once(ABSPATH.'wp-includes/pluggable.php');
-    if (!is_admin() or !current_user_can('edit_post', $post_id) ) die("You don't have permission to edit this post.");
+    if (!is_user_logged_in() or !current_user_can('edit_post', $post_id)) die("You don't have permission to edit this post.");
+
+    // parse image_url
+    $url = parse_url($_POST['image_url']);
+    if(strcmp($url['host'], "pixabay.com")){
+	die("Error: wrong host in url (must be pixabay.com)");
+    }
 
     // get image file
 	$response = wp_remote_get($_POST['image_url']);
@@ -228,7 +234,11 @@ if (isset($_POST['pixabay_upload'])) {
 
 	$q_tags = explode(' ' , $_POST['q']);
 	array_splice($q_tags, 2);
-	foreach ($q_tags as $k=>$v) $q_tags[$k] = trim($v);
+	foreach ($q_tags as $k=>$v) {
+		// Remove ../../../..
+		$v = str_replace("..","",$v);
+		$q_tags[$k] = trim($v);
+	}
     $path_info = pathinfo($_POST['image_url']);
 	$file_name = implode('_', $q_tags).'_'.time().'.'.$path_info['extension'];
 
@@ -243,11 +253,19 @@ if (isset($_POST['pixabay_upload'])) {
 	$target_file_name = $image_upload_path . '/' . $file_name;
 	$result = @file_put_contents($target_file_name, $response['body']);
 	unset($response['body']);
-	if ($result === false) die('Error: Failed to write file - '.$target_file_name);
+	if ($result === false) die('Error: Failed to write file: '.$target_file_name);
+
+	// are we dealing with an image
+    require_once(ABSPATH.'wp-admin/includes/image.php');
+	if (!wp_read_image_metadata($target_file_name)) {
+		unlink($target_file_name);
+		die('Error: File is not an image.');
+	}
+
 	$image_title = ucwords(implode(', ', $q_tags));
     $attachment_caption = '';
     if (!$pixabay_images_settings['attribution'] | $pixabay_images_settings['attribution']=='true')
-        $attachment_caption = '<a href="http://pixabay.com/users/'.$_POST['image_user'].'/">'.$_POST['image_user'].'</a> / Pixabay';
+        $attachment_caption = '<a href="http://pixabay.com/users/'.htmlentities($_POST['image_user']).'/">'.htmlentities($_POST['image_user']).'</a> / Pixabay';
 
     // insert attachment
 	$wp_filetype = wp_check_filetype(basename($target_file_name), null);
@@ -260,7 +278,6 @@ if (isset($_POST['pixabay_upload'])) {
 	$attach_id = wp_insert_attachment($attachment, $target_file_name, $post_id);
 	if ($attach_id == 0) die('Error: File attachment error');
 
-	require_once(ABSPATH.'wp-admin/includes/image.php');
 	$attach_data = wp_generate_attachment_metadata($attach_id, $target_file_name);
 	$result = wp_update_attachment_metadata($attach_id, $attach_data);
 	if ($result === false) die('Error: File attachment metadata error');
