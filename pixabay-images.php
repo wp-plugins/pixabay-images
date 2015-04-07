@@ -17,7 +17,7 @@ add_action('plugins_loaded', 'pixabay_images_load_textdomain');
 
 
 // add settings
-require_once(plugin_dir_path(__FILE__)."settings.php");
+include("settings.php");
 
 
 // add tab to media upload window

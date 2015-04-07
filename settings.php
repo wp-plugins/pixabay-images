@@ -21,7 +21,34 @@ function register_pixabay_images_options(){
 
 function pixabay_images_render_language(){
     $options = get_option('pixabay_images_options');
-    $languages = array('id' => 'Bahasa Indonesia', 'cs' => 'Čeština', 'de' => 'Deutsch', 'en' => 'English', 'es' => 'Español', 'fr' => 'Français', 'it' => 'Italiano', 'nl' => 'Nederlands', 'no' => 'Norsk', 'hu' => 'Magyar', 'ru' => 'Русский', 'pl' => 'Polski', 'pt' => 'Português', 'ro' => 'Română', 'fi' => 'Suomi', 'sv' => 'Svenska', 'tr' => 'Türkçe', 'ja' => '日本語', 'ko' => '한국어', 'zh' => '简体中文');
+    $languages = array(
+        'cs' => 'Čeština',
+        'da' => 'Dansk',
+        'de' => 'Deutsch',
+        'en' => 'English',
+        'es' => 'Español',
+        'fr' => 'Français',
+        'id' => 'Indonesia',
+        'it' => 'Italiano',
+        'hu' => 'Magyar',
+        'nl' => 'Nederlands',
+        'no' => 'Norsk',
+        'pl' => 'Polski',
+        'pt' => 'Português',
+        'ro' => 'Română',
+        'sk' => 'Slovenčina',
+        'fi' => 'Suomi',
+        'sv' => 'Svenska',
+        'tr' => 'Türkçe',
+        'vi' => 'Việt',
+        'th' => 'ไทย',
+        'bg' => 'Български',
+        'ru' => 'Русский',
+        'el' => 'Ελληνική',
+        'ja' => '日本語',
+        'ko' => '한국어',
+        'zh' => '简体中文'
+    );
     $set_lang = substr(get_locale(), 0, 2);
     if (!$options['language']) $options['language'] = $languages[$set_lang]?$set_lang:'en';
     echo '<select name="pixabay_images_options[language]">';
