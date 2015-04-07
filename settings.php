@@ -1,5 +1,7 @@
 <?php
 
+$pixabay_images_gallery_languages = array('cs' => 'Čeština', 'da' => 'Dansk', 'de' => 'Deutsch', 'en' => 'English', 'es' => 'Español', 'fr' => 'Français', 'id' => 'Indonesia', 'it' => 'Italiano', 'hu' => 'Magyar', 'nl' => 'Nederlands', 'no' => 'Norsk', 'pl' => 'Polski', 'pt' => 'Português', 'ro' => 'Română', 'sk' => 'Slovenčina', 'fi' => 'Suomi', 'sv' => 'Svenska', 'tr' => 'Türkçe', 'vi' => 'Việt', 'th' => 'ไทย', 'bg' => 'Български', 'ru' => 'Русский', 'el' => 'Ελληνική', 'ja' => '日本語', 'ko' => '한국어', 'zh' => '简体中文');
+
 add_action('admin_menu', 'pixabay_images_add_settings_menu');
 function pixabay_images_add_settings_menu() {
     add_options_page(__('Pixabay Images Settings', 'pixabay_images'), __('Pixabay Images', 'pixabay_images'), 'manage_options', 'pixabay_images_settings', 'pixabay_images_settings_page');
@@ -20,39 +22,12 @@ function register_pixabay_images_options(){
 
 
 function pixabay_images_render_language(){
+    global $pixabay_images_gallery_languages;
     $options = get_option('pixabay_images_options');
-    $languages = array(
-        'cs' => 'Čeština',
-        'da' => 'Dansk',
-        'de' => 'Deutsch',
-        'en' => 'English',
-        'es' => 'Español',
-        'fr' => 'Français',
-        'id' => 'Indonesia',
-        'it' => 'Italiano',
-        'hu' => 'Magyar',
-        'nl' => 'Nederlands',
-        'no' => 'Norsk',
-        'pl' => 'Polski',
-        'pt' => 'Português',
-        'ro' => 'Română',
-        'sk' => 'Slovenčina',
-        'fi' => 'Suomi',
-        'sv' => 'Svenska',
-        'tr' => 'Türkçe',
-        'vi' => 'Việt',
-        'th' => 'ไทย',
-        'bg' => 'Български',
-        'ru' => 'Русский',
-        'el' => 'Ελληνική',
-        'ja' => '日本語',
-        'ko' => '한국어',
-        'zh' => '简体中文'
-    );
     $set_lang = substr(get_locale(), 0, 2);
-    if (!$options['language']) $options['language'] = $languages[$set_lang]?$set_lang:'en';
+    if (!$options['language']) $options['language'] = $pixabay_images_gallery_languages[$set_lang]?$set_lang:'en';
     echo '<select name="pixabay_images_options[language]">';
-    foreach ($languages as $k => $v) { echo '<option value="'.$k.'"'.($options['language']==$k?' selected="selected"':'').'>'.$v.'</option>'; }
+    foreach ($pixabay_images_gallery_languages as $k => $v) { echo '<option value="'.$k.'"'.($options['language']==$k?' selected="selected"':'').'>'.$v.'</option>'; }
     echo '</select>';
 }
 
@@ -111,9 +86,9 @@ function pixabay_images_settings_page() { ?>
 
 
 function pixabay_images_options_validate($input){
+    global $pixabay_images_gallery_languages;
     $options = get_option('pixabay_images_options');
-    $languages = array('cs' => 'Čeština', 'da' => 'Dansk', 'de' => 'Deutsch', 'en' => 'English', 'es' => 'Español', 'fr' => 'Français', 'id' => 'Indonesia', 'it' => 'Italiano', 'hu' => 'Magyar', 'nl' => 'Nederlands', 'no' => 'Norsk', 'pl' => 'Polski', 'pt' => 'Português', 'ro' => 'Română', 'sk' => 'Slovenčina', 'fi' => 'Suomi', 'sv' => 'Svenska', 'tr' => 'Türkçe', 'vi' => 'Việt', 'th' => 'ไทย', 'bg' => 'Български', 'ru' => 'Русский', 'el' => 'Ελληνική', 'ja' => '日本語', 'ko' => '한국어', 'zh' => '简体中文');
-    if ($languages[$input['language']]) $options['language'] = $input['language'];
+    if ($pixabay_images_gallery_languages[$input['language']]) $options['language'] = $input['language'];
     $per_page = intval($input['per_page']);
     if ($per_page >= 10 and $per_page <= 100) $options['per_page'] = $per_page;
     if (in_array($input['image_type'], array('all', 'photo', 'clipart'))) $options['image_type'] = $input['image_type'];
