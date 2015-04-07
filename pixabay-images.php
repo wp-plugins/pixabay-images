@@ -20,6 +20,9 @@ add_action('plugins_loaded', 'pixabay_images_load_textdomain');
 include("settings.php");
 
 
+wp_enqueue_script('jquery');
+
+
 // add tab to media upload window
 function media_upload_tabs_handler($tabs) { $tabs['pixabaytab'] = __('Pixabay Images', 'pixabay_images'); return $tabs; }
 add_filter('media_upload_tabs', 'media_upload_tabs_handler');
