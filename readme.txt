@@ -3,7 +3,7 @@ Contributors: SimonStone, byrev
 Donate link: http://byrev.org/donate.php
 Tags: images, photos, pictures, cliparts, clip arts, illustrations, vectors, vector graphics, stock photos, stock images, stock pictures, royalty-free, public domain, pd, copyright-free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
-Tested up to: 4.2
+Tested up to: 4.2.2
 Stable tag: 2.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,7 +12,7 @@ Find quality CC0 Public Domain images for commercial use, and add them to your b
 
 == Description ==
 
-[Pixabay Images](http://pixabay.com/blog/posts/p-36/) is a WordPress plugin that let's you pick CC0 public domain pictures from [Pixabay](http://pixabay.com/) and insert them with just a click anywhere on your blog. The images are safe to use, and paying attribution or linking back to the source is not required.
+[Pixabay Images](https://pixabay.com/blog/posts/p-36/) is a WordPress plugin that let's you pick CC0 public domain pictures from [Pixabay](https://pixabay.com/) and insert them with just a click anywhere on your blog. The images are safe to use, and paying attribution or linking back to the source is not required.
 
 Features include:
 
@@ -22,7 +22,7 @@ Features include:
 * Direct image uploads to WordPress' media library.
 * Use of standard media dialogues for editing and inserting images.
 
-For more information, check out [Pixabay.com](http://pixabay.com/blog/posts/p-36/).
+For more information, check out [Pixabay.com](https://pixabay.com/blog/posts/p-36/).
 
 == Installation ==
 
@@ -38,11 +38,11 @@ CC0 1.0 Universal is Creative Commons' Public Domain dedication, which is used f
 
 = Are there any restrictions or requirements for using these images? =
 
-You are free to adapt and use the images for commercial purposes without attributing the original author or source. Although absolutely not required, a link back to Pixabay is appreciated. Learn more in this article about: [public domain images and their limitations](http://pixabay.com/blog/posts/public-domain-images-4/)
+You are free to adapt and use the images for commercial purposes without attributing the original author or source. Although absolutely not required, a link back to Pixabay is appreciated. Learn more in this article about: [public domain images and their limitations](https://pixabay.com/blog/posts/public-domain-images-4/)
 
 = Where do I get further information about Pixabay? =
 
-Read Pixabay's [FAQ](http://pixabay.com/service/faq/) and/or their [Terms of Use](http://pixabay.com/service/terms/) to learn more.
+Read Pixabay's [FAQ](https://pixabay.com/service/faq/) and/or their [Terms of Use](https://pixabay.com/service/terms/) to learn more.
 
 == Screenshots ==
 
@@ -94,6 +94,11 @@ Read Pixabay's [FAQ](http://pixabay.com/service/faq/) and/or their [Terms of Use
 
 * Fixed security issues: Authentication bypass and path traversal attack (Thanks goes to Mogwai, IT-Sicherheitsberatung Munich)
 * Included new languages in settings page.
+
+= 2.5 =
+
+* Tested in WordPress 4.2.2
+* Updated Pixabay API to use secure HTTPS connection.
 
 == Upgrade Notice ==
 

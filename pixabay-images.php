@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: Pixabay Images
-Plugin URI: http://pixabay.com/blog/posts/p-36/
+Plugin URI: https://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
 Version: 2.4
 Author: Simon Steinberger
-Author URI: http://pixabay.com/users/Simon/
+Author URI: https://pixabay.com/users/Simon/
 License: GPLv2
 */
 
@@ -105,7 +105,7 @@ function media_pixabay_images_tab() {
             function call_api(q, p) {
                 if (p in cache) render_px_results(q, p, cache[p]);
                 else
-                    crossDomainAjax('http://pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(data){
+                    crossDomainAjax('https://pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(data){
                         if (!(data.totalHits > 0)) {
                             $('#pixabay_results').html('<div style="color:#d71500;font-size:16px">No hits</div>');
                             return false;
@@ -178,7 +178,7 @@ function media_pixabay_images_tab() {
                                 <img src="'+img.attr('src')+'" style="width:'+parseInt(width640/2)+'px !important;height:'+parseInt(height640/2)+'px !important;">\
                                 <img src="'+hits[idx].webformatURL+'" style="width:'+parseInt(width640/2)+'px !important;height:'+parseInt(height640/2)+'px !important;">\
                             </a>\
-                            <div style="padding:6px 5px 4px;margin:5px 0 0;text-align:left;border-top:1px solid #ddd"><?= _e('CC0 Image by', 'pixabay_images'); ?> <a href="http://pixabay.com/users/'+hits[idx].user+'/" target="_blank">'+hits[idx].user+'</a> / <a href="http://pixabay.com/'+lang+'/photos/?image_type='+image_type+'&orientation='+orientation+'&q='+escapejs(q)+'" target="_blank">Pixabay</a></div>\
+                            <div style="padding:6px 5px 4px;margin:5px 0 0;text-align:left;border-top:1px solid #ddd"><?= _e('CC0 Image by', 'pixabay_images'); ?> <a href="https://pixabay.com/users/'+hits[idx].user+'/" target="_blank">'+hits[idx].user+'</a> / <a href="https://pixabay.com/'+lang+'/photos/?image_type='+image_type+'&orientation='+orientation+'&q='+escapejs(q)+'" target="_blank">Pixabay</a></div>\
                         </div>');
                         thumb.append(preview);
 
@@ -269,7 +269,7 @@ if (isset($_POST['pixabay_upload'])) {
 	$image_title = ucwords(implode(', ', $q_tags));
     $attachment_caption = '';
     if (!$pixabay_images_settings['attribution'] | $pixabay_images_settings['attribution']=='true')
-        $attachment_caption = '<a href="http://pixabay.com/users/'.htmlentities($_POST['image_user']).'/">'.htmlentities($_POST['image_user']).'</a> / Pixabay';
+        $attachment_caption = '<a href="https://pixabay.com/users/'.htmlentities($_POST['image_user']).'/">'.htmlentities($_POST['image_user']).'</a> / Pixabay';
 
     // insert attachment
 	$wp_filetype = wp_check_filetype(basename($target_file_name), null);
