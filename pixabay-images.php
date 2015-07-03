@@ -4,7 +4,7 @@
 Plugin Name: Pixabay Images
 Plugin URI: https://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.6
+Version: 2.7
 Author: Simon Steinberger
 Author URI: https://pixabay.com/users/Simon/
 License: GPLv2
@@ -105,7 +105,7 @@ function media_pixabay_images_tab() {
             function call_api(q, p) {
                 if (p in cache) render_px_results(q, p, cache[p]);
                 else
-                    crossDomainAjax('http://pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(data){
+                    crossDomainAjax((window.location.protocol == 'http:' ? 'http' : 'https') + '://pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(data){
                         if (!(data.totalHits > 0)) {
                             $('#pixabay_results').html('<div style="color:#d71500;font-size:16px">No hits</div>');
                             return false;
