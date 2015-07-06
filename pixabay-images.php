@@ -4,7 +4,7 @@
 Plugin Name: Pixabay Images
 Plugin URI: https://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.7
+Version: 2.8
 Author: Simon Steinberger
 Author URI: https://pixabay.com/users/Simon/
 License: GPLv2
@@ -105,7 +105,7 @@ function media_pixabay_images_tab() {
             function call_api(q, p) {
                 if (p in cache) render_px_results(q, p, cache[p]);
                 else
-                    crossDomainAjax((window.location.protocol == 'http:' ? 'http' : 'https') + '://pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(data){
+                    crossDomainAjax('https://pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(data){
                         if (!(data.totalHits > 0)) {
                             $('#pixabay_results').html('<div style="color:#d71500;font-size:16px">No hits</div>');
                             return false;
@@ -226,13 +226,13 @@ if (isset($_POST['pixabay_upload'])) {
     if (!is_user_logged_in() or !current_user_can('edit_post', $post_id)) die("You don't have permission to edit this post.");
 
     // parse image_url
-    $url = parse_url($_POST['image_url']);
-    if(strcmp($url['host'], "pixabay.com")){
-	die("Error: wrong host in url (must be pixabay.com)");
+    $url = str_replace('https:', 'http:', $_POST['image_url']);
+    if(strcmp(parse_url($url)['host'], 'pixabay.com')) {
+        die('Error: Invalid host in URL (must be pixabay.com)');
     }
 
     // get image file
-	$response = wp_remote_get($_POST['image_url']);
+	$response = wp_remote_get($url);
 	if (is_wp_error($response)) die('Error: '.$response->get_error_message());
 
 	$q_tags = explode(' ' , $_POST['q']);
@@ -243,7 +243,7 @@ if (isset($_POST['pixabay_upload'])) {
 		$v = str_replace("/", "", $v);
 		$q_tags[$k] = trim($v);
 	}
-    $path_info = pathinfo($_POST['image_url']);
+    $path_info = pathinfo($url);
 	$file_name = implode('_', $q_tags).'_'.time().'.'.$path_info['extension'];
 
 	$hash_upload = md5($file_name);
@@ -251,13 +251,13 @@ if (isset($_POST['pixabay_upload'])) {
 	$image_upload_path = $wp_upload_dir['path'].'/pixabay/'.$hash_upload[0];
 
 	if (!is_dir($image_upload_path)) {
-		if (!@mkdir($image_upload_path, 0777, true)) die('Error: Failed to create upload folder - '.$image_upload_path);
+		if (!@mkdir($image_upload_path, 0777, true)) die('Error: Failed to create upload folder '.$image_upload_path);
 	}
 
 	$target_file_name = $image_upload_path . '/' . $file_name;
 	$result = @file_put_contents($target_file_name, $response['body']);
 	unset($response['body']);
-	if ($result === false) die('Error: Failed to write file: '.$target_file_name);
+	if ($result === false) die('Error: Failed to write file '.$target_file_name);
 
 	// are we dealing with an image
     require_once(ABSPATH.'wp-admin/includes/image.php');
