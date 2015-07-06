@@ -4,7 +4,7 @@
 Plugin Name: Pixabay Images
 Plugin URI: https://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.8
+Version: 2.9
 Author: Simon Steinberger
 Author URI: https://pixabay.com/users/Simon/
 License: GPLv2
@@ -227,7 +227,8 @@ if (isset($_POST['pixabay_upload'])) {
 
     // parse image_url
     $url = str_replace('https:', 'http:', $_POST['image_url']);
-    if(strcmp(parse_url($url)['host'], 'pixabay.com')) {
+    $parsed_url = parse_url($url);
+    if(strcmp($parsed_url['host'], 'pixabay.com')) {
         die('Error: Invalid host in URL (must be pixabay.com)');
     }
 
