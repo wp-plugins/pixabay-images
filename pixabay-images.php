@@ -4,7 +4,7 @@
 Plugin Name: Pixabay Images
 Plugin URI: https://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.9
+Version: 2.10
 Author: Simon Steinberger
 Author URI: https://pixabay.com/users/Simon/
 License: GPLv2
@@ -17,7 +17,7 @@ add_action('plugins_loaded', 'pixabay_images_load_textdomain');
 
 
 // add settings
-include("settings.php");
+include(plugin_dir_path(__FILE__).'settings.php');
 
 
 wp_enqueue_script('jquery');
@@ -102,10 +102,11 @@ function media_pixabay_images_tab() {
                 call_api(q, 1);
             });
 
-            function call_api(q, p) {
-                if (p in cache) render_px_results(q, p, cache[p]);
+            function call_api(q, p){
+                if (p in cache)
+                    render_px_results(q, p, cache[p]);
                 else
-                    crossDomainAjax('https://pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(data){
+                    crossDomainAjax('//pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(data){
                         if (!(data.totalHits > 0)) {
                             $('#pixabay_results').html('<div style="color:#d71500;font-size:16px">No hits</div>');
                             return false;
@@ -223,7 +224,7 @@ if (isset($_POST['pixabay_upload'])) {
 
     # "pluggable.php" is required for current_user_can() and other upload relevant functions
     require_once(ABSPATH.'wp-includes/pluggable.php');
-    if (!is_user_logged_in() or !current_user_can('edit_post', $post_id)) die("You don't have permission to edit this post.");
+    if (!is_admin() or !current_user_can('edit_post', $post_id)) die("You don't have permission to edit this post.");
 
     // parse image_url
     $url = str_replace('https:', 'http:', $_POST['image_url']);
