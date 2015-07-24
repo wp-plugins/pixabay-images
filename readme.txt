@@ -3,8 +3,8 @@ Contributors: SimonStone, byrev
 Donate link: http://byrev.org/donate.php
 Tags: images, photos, pictures, cliparts, clip arts, illustrations, vectors, vector graphics, stock photos, stock images, stock pictures, royalty-free, public domain, pd, copyright-free, free, free images, cc0, cc, creative commons, commercial use, insert, search, upload, media
 Requires at least: 3.5.1
-Tested up to: 4.2.2
-Stable tag: 2.10
+Tested up to: 4.2.3
+Stable tag: 2.11
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,10 @@ You are free to adapt and use the images for commercial purposes without attribu
 = Where do I get further information about Pixabay? =
 
 Read Pixabay's [FAQ](https://pixabay.com/service/faq/) and/or their [Terms of Use](https://pixabay.com/service/terms/) to learn more.
+
+= Why am I not getting search results on Internet Explorer? =
+
+The plugin works on all modern browsers; Internet Explorer version 10 or higer is required.
 
 == Screenshots ==
 
@@ -122,6 +126,12 @@ Read Pixabay's [FAQ](https://pixabay.com/service/faq/) and/or their [Terms of Us
 * Fixed `You don't have permission to edit this post` issue.
 * Fixed plugin for SSL sites.
 * Fixed issues with IE 10/11.
+
+= 2.11 =
+
+* Tested in WordPress 4.2.3
+* Second fix for `You don't have permission to edit this post` issue.
+* Fixed warning about wp_enqueue_script on plugin activation.
 
 == Upgrade Notice ==
 

@@ -4,7 +4,7 @@
 Plugin Name: Pixabay Images
 Plugin URI: https://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.10
+Version: 2.11
 Author: Simon Steinberger
 Author URI: https://pixabay.com/users/Simon/
 License: GPLv2
@@ -20,7 +20,8 @@ add_action('plugins_loaded', 'pixabay_images_load_textdomain');
 include(plugin_dir_path(__FILE__).'settings.php');
 
 
-wp_enqueue_script('jquery');
+function pixabay_images_enqueue_jquery() { wp_enqueue_script('jquery'); }
+add_action('admin_enqueue_scripts', 'pixabay_images_enqueue_jquery');
 
 
 // add tab to media upload window
@@ -75,7 +76,6 @@ function media_pixabay_images_tab() {
             <div id="pixabay_results" style="margin-top:25px;padding-top:25px;border-top:1px solid #ddd"></div>
         </div>
         <script>
-            function getCORS(url, success) { var xhr = new XMLHttpRequest(); xhr.open('GET', url); xhr.onload = success; xhr.send(); return xhr; }
             function escapejs(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,"\\'");}
             // hoverIntent r7
             (function(e){e.fn.hoverIntent=function(t,n,r){var i={interval:100,sensitivity:7,timeout:0};if(typeof t==="object"){i=e.extend(i,t)}else if(e.isFunction(n)){i=e.extend(i,{over:t,out:n,selector:r})}else{i=e.extend(i,{over:t,out:t,selector:n})}var s,o,u,a;var f=function(e){s=e.pageX;o=e.pageY};var l=function(t,n){n.hoverIntent_t=clearTimeout(n.hoverIntent_t);if(Math.abs(u-s)+Math.abs(a-o)<i.sensitivity){e(n).off("mousemove.hoverIntent",f);n.hoverIntent_s=1;return i.over.apply(n,[t])}else{u=s;a=o;n.hoverIntent_t=setTimeout(function(){l(t,n)},i.interval)}};var c=function(e,t){t.hoverIntent_t=clearTimeout(t.hoverIntent_t);t.hoverIntent_s=0;return i.out.apply(t,[e])};var h=function(t){var n=jQuery.extend({},t);var r=this;if(r.hoverIntent_t){r.hoverIntent_t=clearTimeout(r.hoverIntent_t)}if(t.type=="mouseenter"){u=n.pageX;a=n.pageY;e(r).on("mousemove.hoverIntent",f);if(r.hoverIntent_s!=1){r.hoverIntent_t=setTimeout(function(){l(n,r)},i.interval)}}else{e(r).off("mousemove.hoverIntent",f);if(r.hoverIntent_s==1){r.hoverIntent_t=setTimeout(function(){c(n,r)},i.timeout)}}};return this.on({"mouseenter.hoverIntent":h,"mouseleave.hoverIntent":h},i.selector)}})(jQuery)
@@ -105,16 +105,22 @@ function media_pixabay_images_tab() {
             function call_api(q, p){
                 if (p in cache)
                     render_px_results(q, p, cache[p]);
-                else
-                    getCORS('//pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q), function(request){
-                        var data =JSON.parse(request.currentTarget.response || request.target.responseText);
-                        if (!(data.totalHits > 0)) {
-                            $('#pixabay_results').html('<div style="color:#d71500;font-size:16px">No hits</div>');
-                            return false;
+                else {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', '//pixabay.com/api/?username=WPPlugin&key=a70dc9ab130236b9e67c&response_group=high_resolution&lang='+lang+'&image_type='+image_type+'&orientation='+orientation+'&per_page='+per_page+'&page='+p+'&search_term='+encodeURIComponent(q));
+                    xhr.onreadystatechange = function(){
+                        if (this.status == 200 && this.readyState == 4) {
+                            var data = JSON.parse(this.responseText);
+                            if (!(data.totalHits > 0)) {
+                                $('#pixabay_results').html('<div style="color:#d71500;font-size:16px">No hits</div>');
+                                return false;
+                            }
+                            cache[p] = data;
+                            render_px_results(q, p, data);
                         }
-                        cache[p] = data;
-                        render_px_results(q, p, data);
-                    });
+                    };
+                    xhr.send();
+                }
                 return false;
             }
 
@@ -225,7 +231,7 @@ if (isset($_POST['pixabay_upload'])) {
 
     # "pluggable.php" is required for current_user_can() and other upload relevant functions
     require_once(ABSPATH.'wp-includes/pluggable.php');
-    if (!is_admin() or !current_user_can('edit_post', $post_id)) die("You don't have permission to edit this post.");
+    if (!is_admin() or !current_user_can('edit_posts', $post_id)) die("You don't have permission to edit this post.");
 
     // parse image_url
     $url = str_replace('https:', 'http:', $_POST['image_url']);
