@@ -4,7 +4,7 @@
 Plugin Name: Pixabay Images
 Plugin URI: https://pixabay.com/blog/posts/p-36/
 Description: Find quality public domain images from Pixabay and upload them with just one click.
-Version: 2.11
+Version: 2.12
 Author: Simon Steinberger
 Author URI: https://pixabay.com/users/Simon/
 License: GPLv2
@@ -210,7 +210,7 @@ function media_pixabay_images_tab() {
                 var idx = $('.preview').data('idx'), image_url;
                 image_url = $(this).hasClass('150px') ? hits[idx].previewURL : $(this).hasClass('1280px') ? hits[idx].largeImageURL : hits[idx].webformatURL;
                 $('.preview').html('Uploading image ...');
-                $.post('.', { pixabay_upload: "1", image_url: image_url, image_user: hits[idx].user, q: q }, function(data){
+                $.post('.', { pixabay_upload: "1", image_url: image_url, image_user: hits[idx].user, q: q, wpnonce: '<?= wp_create_nonce('pixabay_images_security_nonce'); ?>' }, function(data){
                     if (parseInt(data) == data)
                         window.location = 'media-upload.php?type=image&tab=library&post_id='+post_id+'&attachment_id='+data;
                     else
@@ -226,12 +226,18 @@ add_action('media_upload_pixabaytab', 'media_upload_pixabaytab_handler');
 
 
 if (isset($_POST['pixabay_upload'])) {
+    # "pluggable.php" is required for wp_verify_nonce() and other upload related helpers
+    if (!function_exists('wp_verify_nonce'))
+        require_once(ABSPATH.'wp-includes/pluggable.php');
+
+	$nonce = $_POST['wpnonce'];
+	if (!wp_verify_nonce($nonce, 'pixabay_images_security_nonce')) {
+        die('Error: Invalid request.');
+		exit;
+	}
+
     $post_id = absint($_REQUEST['post_id']);
     $pixabay_images_settings = get_option('pixabay_images_options');
-
-    # "pluggable.php" is required for current_user_can() and other upload relevant functions
-    require_once(ABSPATH.'wp-includes/pluggable.php');
-    if (!is_admin() or !current_user_can('edit_posts', $post_id)) die("You don't have permission to edit this post.");
 
     // parse image_url
     $url = str_replace('https:', 'http:', $_POST['image_url']);
@@ -253,11 +259,10 @@ if (isset($_POST['pixabay_upload'])) {
 		$q_tags[$k] = trim($v);
 	}
     $path_info = pathinfo($url);
-	$file_name = implode('_', $q_tags).'_'.time().'.'.$path_info['extension'];
+	$file_name = sanitize_file_name(implode('_', $q_tags).'_'.time().'.'.$path_info['extension']);
 
-	$hash_upload = md5($file_name);
 	$wp_upload_dir = wp_upload_dir();
-	$image_upload_path = $wp_upload_dir['path'].'/pixabay/'.$hash_upload[0];
+	$image_upload_path = $wp_upload_dir['path'];
 
 	if (!is_dir($image_upload_path)) {
 		if (!@mkdir($image_upload_path, 0777, true)) die('Error: Failed to create upload folder '.$image_upload_path);

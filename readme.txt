@@ -133,6 +133,11 @@ The plugin works on all modern browsers; Internet Explorer version 10 or higer i
 * Second fix for `You don't have permission to edit this post` issue.
 * Fixed warning about wp_enqueue_script on plugin activation.
 
+= 2.12 =
+
+* Improved security
+* Changed default upload path.
+
 == Upgrade Notice ==
 
 None
